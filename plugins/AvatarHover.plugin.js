@@ -1,4 +1,10 @@
-//META { "name": "AvatarHover", "website": "https://inve1951.github.io/BetterDiscordStuff/" } *//
+/**
+ * @name AvatarHover
+ * @author square, noVaLue, MurmursOnSARS, Green
+ * @description When hovering, resize the avatar. Use Ctrl / Ctrl+Shift.
+ * @version 0.7.3
+ */
+
 global.AvatarHover = function () {
   var AsyncKeystate, css, defaultSettings, getSettings, handleFocusLoss, handleKeyUpDown, handleMouseOverOut, hoverCard, lastTarget, makeInput, qualifier, settings, updateHoverCard, updateQualifier;
 
@@ -126,13 +132,13 @@ global.AvatarHover = function () {
 
   updateQualifier = function () {
     return qualifier = [// guilds
-    settings.isHoverGuilds ? ".wrapper-25eVIn" : void 0, // voip, DM channels
-    settings.isHoverChannels ? ".avatarContainer-2inGBK, .channel-2QD9_O .avatar-3uk_u9" : void 0, // friends list
-    settings.isHoverFriends ? ".userInfo-2zN2z8 .avatar-3W3CeO" : void 0, // messages, embeds
-    settings.isHoverChatMessages ? ".contents-2mQqc9 .avatar-1BDn8e, .embedAuthorIcon--1zR3L" : void 0, // channel users
-    settings.isHoverChatUsers ? ".member-3-YXUe .avatar-3uk_u9" : void 0, // DM call
-    settings.isHoverCall ? ".callAvatarWrapper-3Ax_xH" : void 0, // modals, userpopout
-    settings.isHoverProfile ? ".header-QKLPzZ .avatar-3EQepX, .avatarWrapper-3H_478" : void 0].filter(function (s) {
+    settings.isHoverGuilds ? ".wrapper-3kah-n" : void 0, // voip, DM channels
+    settings.isHoverChannels ? ".userAvatar-3Hwf1F, .channel-1Shao0 .avatar-1HDIsL" : void 0, // friends list
+    settings.isHoverFriends ? ".userInfo-2WpsYG .avatar-2MSPKk" : void 0, // messages, embeds
+    settings.isHoverChatMessages ? ".contents-2MsGLg .avatar-2e8lTP, .embedAuthorIcon-3pnkS4" : void 0, // channel users
+    settings.isHoverChatUsers ? ".member-2gU6Ar .avatar-6qzftW" : void 0, // DM call
+    settings.isHoverCall ? ".callAvatarMaskContainer-2Uwued" : void 0, // modals, userpopout
+    settings.isHoverProfile ? ".header-S26rhB .avatar-3QF_VA, .wrapper-3Un6-K" : void 0].filter(function (s) {
       return s != null;
     }).join(", ");
   };
