@@ -1,31 +1,25 @@
-//META { "name": "scrollToLast" } *//
+/**
+ * @name scrollToLast
+ * @author square
+ * @description When entering any text channel, scrolls to the bottom and marks it as read.
+ * @version 1.1.0
+ */
 
-var scrollToLast = function() {
+const Patcher = BdApi.Patcher;
+const Dispatcher = BdApi.Webpack.getModule(m => m.dispatch && m.subscribe);
+const Keybinds = BdApi.Webpack.getByKeys("MARK_CHANNEL_READ");
 
-  var Keybinds, onSwitch, cancels = [];
+module.exports = class scrollToLast {
 
-  Keybinds = BdApi.findModuleByProps("MARK_CHANNEL_READ");
-
-  onSwitch = (ev) => {
-    if(("CHANNEL_SELECT" === ev.type || "GUILD_SELECT" === ev.type) && /^\/channels\/(?:@me|\d+)\/\d+$/.test(window.location.pathname))
-      Keybinds.MARK_CHANNEL_READ.action();
-  };
-
-  return {
-    getName: () => "Scroll-To-Last",
-    getDescription: () => "When entering any text channel, scrolls to the bottom and marks it as read.",
-    getAuthor: () => "square",
-    getVersion: () => "1.0.2",
-
-    start: () => {
-      var _ = BdApi.findModuleByProps("_orderedActionHandlers");
-      _.subscribe("CHANNEL_SELECT", onSwitch); cancels.push(_.unsubscribe.bind(_, "CHANNEL_SELECT", onSwitch));
-      _.subscribe("GUILD_SELECT", onSwitch); cancels.push(_.unsubscribe.bind(_, "GUILD_SELECT", onSwitch));
-    },
-
-    stop: () => {
-      cancels.forEach(c => c());
-      cancels = [];
+    start() {
+        Patcher.after("scrollToLast", Dispatcher, "dispatch", (_, [{ type }]) => {
+            if ((type === "CHANNEL_SELECT" || type === "GUILD_SELECT") && /^\/channels\/(?:@me|\d+)\/\d+$/.test(window.location.pathname)) {
+                Keybinds.MARK_CHANNEL_READ.action(true);
+            }
+        });
+    }
+  
+    stop() {
+        Patcher.unpatchAll("scrollToLast");
     }
   };
-};
